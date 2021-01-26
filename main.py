@@ -20,6 +20,7 @@ def clean_json(date, file, j_content):
         obj = update_null_value(obj, 'latitude')
         obj = update_null_value(obj, 'longitude')
         obj = update_null_value(obj, 'location')
+        print("obj: "+str(obj))
         j_content.append(obj)
 
 def write_ndjson(table_json):
@@ -54,9 +55,11 @@ def main():
             bigquery.SchemaField("Timestamp", "TIMESTAMP"),
         ],
         source_format=bigquery.SourceFormat.NEWLINE_DELIMITED_JSON,
+        create_disposition="CREATE_IF_NEEDED",
+        write_disposition="WRITE_TRUNCATE"
     )
 
-
+    print("Job configured. Navigating folders....")
 
     file_name = "incidents.ndjson"
     regex = r"\d{4}\-\d{2}\-\d{2}"
@@ -64,13 +67,17 @@ def main():
     # Navigate the downloaded files getting each ndjson file
     for subdir, dirs, files in os.walk(temp_folder):
         result = re.search(regex, subdir)
-        if(result):
+        if(result == None):
+            date_string = input_date
+        else:
             date_string = result.group()
-            for file in files: 
-                if(file == file_name):
-                    print(f"{subdir}/{file}")
-                    with open(f"{subdir}/{file}", 'rb') as json_file:
-                        clean_json(date_string,json_file, table_json)
+        for file in files: 
+            if(file == file_name):
+                print("filename matches..")
+                print(f"subdir/{subdir}")
+                print(f"file/{file}")
+                with open(f"{subdir}/{file}", 'r') as json_file:
+                    clean_json(date_string,json_file, table_json)
 
     # Write the resulted JSON as a NDJSON
     write_ndjson(table_json)
