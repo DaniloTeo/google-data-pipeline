@@ -1,9 +1,11 @@
-WITH phase as (SELECT
+SELECT
   descript,
   date,
   EXTRACT(month from date) as month,
-  EXTRACT(year from date) as year,
+  SAFE_CAST(EXTRACT(year from date) AS STRING) as year,
   REGEXP_EXTRACT(safe_cast(time as STRING), "^([0-9]{2}):") as hour,
+  CONCAT(address, ', Austin, TX') as address,
+  location,
   COUNT(*) as occurrences
 FROM
   `bi-psel.danilo_teo.austin_incidents`
@@ -12,16 +14,7 @@ GROUP BY
   descript,
   month,
   year,
-  hour
- ORDER BY descript asc, date asc)
- 
- SELECT 
-  Descript,
-  COUNT(*) as occurrences
- FROM 
-  phase
- WHERE 
-  year >= 2016
- GROUP BY
-  Descript
- ORDER BY occurrences desc
+  hour,
+  address,
+  location
+ ORDER BY descript asc, date asc
