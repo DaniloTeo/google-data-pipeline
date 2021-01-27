@@ -28,5 +28,5 @@ A segunda página contém dois gráficos afetados pelo mesmo filtro de período,
 
 A última página apresenta a tentativa de uma visualização de um mapa de balões. Houve a tentativa de usar o valor da coluna `Location` do esquema da tabela, mas a interação com o Data Studio se mostrou falha. Não era possível mesmo diferenciar as cores de cada tipo de ocorrência pela necessidade de haver apenas um tipo por local(?). Assim, o resultado apresenta um mapa utilizando o endereço expandido (com cidade e estado) e filtros para Ano e tipo de Ocorrência.
 
-### [Link para Dashboard no Data Studio](https://datastudio.google.com/reporting/a27ff67f-a546-43f5-9796-8a3ff8796ef4/page/1hUyB)
+### [Link para Dashboard no Data Studio](https://datastudio.google.com/reporting/a27ff67f-a546-43f5-9796-8a3ff8796ef4)
 ### Project Status: <span style="color: lightgreen">Completed<span>
